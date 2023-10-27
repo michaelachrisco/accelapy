@@ -1,0 +1,438 @@
+{
+	"basePath": "/",
+	"schemes": ["https"],
+	"swagger": "2.0",
+	"host": "auth.accela.com",
+	"info": {
+		"description": "Accela OAuth2 API for generating API access tokens. For an overview, see [Accela API Authentication](../construct-apiAuth.html).",
+		"title": "Authentication",
+		"version": "v4"
+	},
+	"paths": {
+		"/oauth2/authorize": {
+			"post": {
+				"description": "Gets an authorization code (for authorization code flow) or access token (for implicit flow) from the authentication server.\n\nThis API is used for the following: \n\n- [Authorization Code Flow](../construct-authCodeFlow.html) - set the request parameter response_type=code. If successful, the authorization code will be returned in the response body. Use the authorization code to get the access token from [Get Access Token](#operation/oauth2.token). \n\n- [Implicit Flow](../construct-implicitFlow.html) - set the request parameter response_type=token. If successful, the access token will be returned in the access_token parameter in the redirect URL.\n\n**Note**: You can invoke this API using the HTTP GET method. In which case, specify the described request body fields as request query parameters.\n\n\n\n**API Endpoint**:  POST /oauth2/authorize",
+				"summary": "Get Authorization Code",
+				"operationId": "oauth2.authorize",
+				"parameters": [{
+					"description": "Request authorization parameters",
+					"in": "body",
+					"name": "authRequest",
+					"required": true,
+					"schema": {
+							"$ref": "#/definitions/request_authorize"
+					}
+				}],
+				"responses": {
+					"200": {
+						"description": "Successful response. \n\nFor authorization code flow request where response_type=code), the authorization code is returned in the response body. \n\nFor an implicit flow request where response_type=token, the access token will be returned in the access_token parameter in the redirect URL. ",
+						"schema": {
+							"$ref": "#/definitions/response_authorize"
+						}
+					},
+					"400": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					},
+					"401": {
+						"description": "Authorization failed.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					},
+					"403": {
+						"description": "Forbidden request.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					},
+					"404": {
+						"description": "Requested resource not found.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					},
+					"500": {
+						"description": "Internal server error or bad connection.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					}
+				}
+			}
+		},
+		"/oauth2/token": {
+			"post": {
+				"description": "Gets an access token from the authentication server.\n\n \n\nThis API is used for the following: \n\n- [Authorization Code Flow](../construct-authCodeFlow.html) - set the request parameter grant_type=authorization_code.  \n\n- [Password Credential Login](../construct-passwordCredentialLogin.html) - set the request parameter grant_type=password.   \n\n- Refreshing the token - set the request parameter grant_type=refresh_token. Access tokens have a limited lifetime and, in some cases, an application needs access to an API beyond the lifetime of a single access token. When this is the case, your application can obtain a new access token using the refresh token. Your app can refresh the token before it expires or when it expires, according your app requirements or workflow.\n\n\n\n**API Endpoint**:  POST /oauth2/token",
+				"summary": "Get Access Token",
+				"operationId": "oauth2.token",
+				"parameters": [{
+        			"description": "Must be application/x-www-form-urlencoded.",
+        			"in": "header",
+        			"name": "Content-Type",
+        			"required": true,
+        			"type": "string"
+        		}, {
+        			"description": "Your app id.",
+        			"in": "header",
+        			"name": "x-accela-appid",
+        			"required": true,
+        			"type": "string"
+        		}, {
+					"description": "Request token parameters",
+					"in": "body",
+					"name": "tokenRequest",
+					"required": true,
+					"schema": {
+							"$ref": "#/definitions/request_token"
+					}
+				}],
+				"responses": {
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/response_token"
+						}
+					},
+					"400": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					},
+					"401": {
+						"description": "Authorization failed.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					},
+					"403": {
+						"description": "Forbidden request.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					},
+					"404": {
+						"description": "Requested resource not found.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					},
+					"500": {
+						"description": "Internal server error or bad connection.",
+						"schema": {
+							"$ref": "#/definitions/response_error"
+						}
+					}
+				}
+			}
+		},
+		"/oauth2/tokeninfo": {
+			"get": {
+				"description": "Validates a given access token in the *Authorization* http header, and returns the token information. Use the token information to match it with the information used to request the access token.\n\n\n\n**API Endpoint**:  GET /oauth2/tokeninfo",
+				"summary": "Get Token Info",
+				"operationId": "oauth2.tokeninfo",
+				"parameters": [{
+        			"description": "The access token to validate.",
+        			"in": "header",
+        			"name": "Authorization",
+        			"required": true,
+        			"type": "string"
+        		}],
+				"responses": {
+					"200": {
+						"description": "Successful request. ",
+						"schema": {
+							"$ref": "#/definitions/response_tokeninfo"
+						}
+					},
+					"400": {
+						"description": "Invalid request.",
+						"schema": {
+							"$ref": "#/definitions/response_status"
+						}
+					},
+					"401": {
+						"description": "Authorization failed.",
+						"schema": {
+							"$ref": "#/definitions/response_status"
+						}
+					},
+					"403": {
+						"description": "Forbidden request.",
+						"schema": {
+							"$ref": "#/definitions/response_status"
+						}
+					},
+					"404": {
+						"description": "Requested resource not found.",
+						"schema": {
+							"$ref": "#/definitions/response_status"
+						}
+					},
+					"500": {
+						"description": "Internal server error or bad connection.",
+						"schema": {
+							"$ref": "#/definitions/response_status"
+						}
+					}
+				}
+			}
+		}				
+	},
+	"definitions": {
+		"request_authorize": {
+			"type": "object",
+			"required": [
+			     "response_type",
+			     "client_id",
+			     "redirect_uri",
+			     "agency_name",
+			     "environment"
+			],
+			"properties": {
+				"response_type": {
+					"description": "Specifies whether the request is for an authorization code or access token. \n\nValid values: \n\n*code* - Request for an authorization code. See [Authorization Code Flow](../construct-authCodeFlow.html). \n\n*token* - Request for an access token. See [Implicit Flow](../construct-implicitFlow.html).",
+					"enum": ["code","token"],
+					"type": "string"
+				},
+				"client_id": {
+					"description": "The app ID value from [Construct Developer Portal](https://developer.accela.com).",
+					"type": "string"
+				},
+				"redirect_uri": {
+					"description": "The URI that is used to redirect to the client with an authorization code. This must be a valid URL. \n\n**Note**: Special characters in the URL should be encoded.",
+					"type": "string"
+				},
+				"environment": {
+					"description": "The Construct environment name, such as \"PROD\" and \"TEST\". The [Get All Agency Environments](./api-agencies.html#operation/v4.get.agencies.name.environments) API returns a list of configured environments available for a specific agency. The [Get Environment Status](./api-agencies.html#operation/v4.get.agencies.name.environments.env.status) checks connectivity with the Agency/Environment.",
+					"type": "string"
+				},
+				"agency_name": {
+					"description": "The agency name defined in [Construct Administrator Portal](https://admin.accela.com). APIs such as [Get All Agencies](./api-agencies.html#operation/v4.get.agencies), [Get Agency](./api-agencies.html#operation/v4.get.agencies.name), and [Search Agencies](./api-search.html#operation/v4.post.search.agencies) return valid agency names. \n\n**Note**: For an **agency app**, agency is required.\nFor a **citizen app** that use dynamic agency routing functionality, agency_name is optional.",
+					"type": "string"
+				},
+				"forcelogin": {
+					"description": "Indicates whether or not Accela Auth server forces end-user login each time client requests access token. \n\nValid values: \n\n*true*: Always force end-user login. \n\n*false*: Do not force end-user login. The sever determines if the current request needs login. This is the default behavior.",
+					"type": "boolean"
+				},
+				"scope": {
+					"description": "The scope of the resources that the client requests. Enter a list of APIs scope names separated by spaces. Get the scope names from the [Accela API Reference](./api-index.html).",
+					"type": "string"
+				},
+				"state": {
+					"description": "An opaque value that the client uses for maintaining the state between the request and callback. Enter a unique value. This can be used for [Cross-Site Request Forgery](http://en.wikipedia.org/wiki/Cross-site_request_forgery) (CSRF) protection.",
+					"type": "string"
+				}
+			}
+		},
+		"response_authorize": {
+			"type": "object",
+			"properties": {
+				"code": {
+					"type": "string",
+					"description": "The authorization code (for an authorization code flow request where response_type=code). The client app uses the authorization code to exchange for an access token."
+				},
+				"environment": {
+					"type": "string",
+					"description": "The environment name that the user selected when signing into the app (for an authorization code flow request where response_type=code). \n\nFor an implicit flow request where response_type=token, environment is returned as a parameter in the redirection URI using the \"application/x-www-form-urlencoded\" format. "
+				},
+				"agency_name": {
+					"type": "string",
+					"description": "The agency name that the user entered when signing into the app (for an authorization code flow request where response_type=code). \n\nFor an implicit flow request where response_type=token, agency_name is returned as a parameter in the redirection URI using the \"application/x-www-form-urlencoded\" format. "
+				},
+				"state": {
+					"type": "string",
+					"description": "The exact value received from the client (for an authorization code flow request where response_type=code). Check this value against original state value sent in the request to verify and protect against CSRF. \n\nFor an implicit flow request where response_type=token, state is returned as a parameter in the redirection URI using the \"application/x-www-form-urlencoded\" format. "
+				},
+				"access_token": {
+					"type": "string",
+					"description": "The issued user access token (for an implicit flow request where response_type=token). access_token is returned as a parameter in the redirection URI using the \"application/x-www-form-urlencoded\" format. "
+				},
+				"token_type": {
+					"type": "string",
+					"description": "The type of the token issued (for an implicit flow request where response_type=token). token_type is returned as a parameter in the redirection URI using the \"application/x-www-form-urlencoded\" format. "
+				},
+				"expires_in": {
+					"type": "string",
+					"description": "The lifetime in seconds of the access token (for an implicit flow request where response_type=token). For example, the value \"3600\" denotes that the access token will expire in one hour from the time the response was generated. expires_in is returned as a parameter in the redirection URI using the \"application/x-www-form-urlencoded\" format. "
+				},
+				"scope": {
+					"type": "string",
+					"description": "The scope of the resources authenticated by the authorization server (for an implicit flow request where response_type=token). scope is returned as a parameter in the redirection URI using the \"application/x-www-form-urlencoded\" format. "
+				}
+			}
+		},
+		"request_token": {
+			"type": "object",
+			"required": [
+			     "client_id",
+			     "client_secret",
+			     "grant_type",
+			     "redirect_uri",
+			     "code",
+			     "username",
+			     "password",
+			     "agency_name",
+			     "environment"
+			],
+			"properties": {
+				"client_id": {
+					"description": "The app ID value from [Construct Developer Portal](https://developer.accela.com).",
+					"type": "string"
+				},
+				"client_secret": {
+					"description": "The app secret value from [Construct Developer Portal](https://developer.accela.com).",
+					"type": "string"
+				},
+				"grant_type": {
+					"description": "Specifies whether the request is for an authorization code, password credential access token, or refresh token. Valid values: \n\nValues: \n\nauthorization_code - Request to exchange the given authorization code with an access token. Used with [Authorization Code Flow](../construct-authCodeFlow.html). \n\npassword - Request authentication via userid and password credential. See [Password Credential Login](../construct-passwordCredentialLogin.html). \n\nrefresh_token - Request to refresh the token. \n\n**Note**: Make sure the grant_type value does not contain any space character.",
+					"enum": ["authorization_code", "password", "refresh_token"],
+					"type": "string"
+				},
+				"code": {
+					"description": "The authorization code obtained from the preceding [/oauth2/authorize](#operation/oauth2.authorize) request. \n\n**Note**: code is required only when calling this API with grant_type=authorization_code for [Authorization Code Flow](../construct-authCodeFlow.html). \n\n**Note**: The code should be URL-encoded, if you are using tools or libraries which will auto-encode the code, you need to pass the code under decoded. \n\n**Note**: The code can be used no more than one time, the client should apply the rule during exchange access token.",
+					"type": "string"
+				},
+				"redirect_uri": {
+					"description": "The URI that is used to redirect to the client with an access token. \n\n**Note**: redirect_uri is required only when calling this API with grant_type=authorization_code for [Authorization Code Flow](../construct-authCodeFlow.html). \n\n**Note**: The value of redirect_uri must match the redirect_uri used in the preceding [/oauth2/authorize](#operation/oauth2.authorize) request.",
+					"type": "string"
+				},
+				"username": {
+					"description": "For a **citizen app**, the user name is the Civic ID.\nFor an **agency app**, the user name is the Civic Platform account. \n\n**Note**: username is required only when calling this API with grant_type=password for [Password Credential Login](../construct-passwordCredentialLogin.html). ",
+					"type": "string"
+				},
+				"password": {
+					"description": "For a **citizen app**, the user name is the Civic ID password.\nFor an **agency app**, the user name is the Civic Platform password. \n\n**Note**: username is required only when calling this API with grant_type=password for [Password Credential Login](../construct-passwordCredentialLogin.html). ",
+					"type": "string"
+				},
+				"scope": {
+					"description": "The scope of the resources that the client requests. Enter a list of APIs scope names separated by spaces. Get the scope names from the [Accela API Reference](./api-index.html). \n\n**Note**: scope is required only when calling this API with grant_type=password for [Password Credential Login](../construct-passwordCredentialLogin.html). ",
+					"type": "string"
+				},
+				"agency_name": {
+					"description": "The agency name defined in [Construct Administrator Portal](https://admin.accela.com). APIs such as [Get All Agencies](./api-agencies.html#operation/v4.get.agencies), [Get Agency](./api-agencies.html#operation/v4.get.agencies.name), and [Search Agencies](./api-search.html#operation/v4.post.search.agencies) return valid agency names. \n\n**Note**: agency_name is used only when calling this API with grant_type=password for [Password Credential Login](../construct-passwordCredentialLogin.html). For an **agency app**, agency_name is required.\nFor a **citizen app**, agency_name is optional.",
+					"type": "string"
+				},
+				"environment": {
+					"description": "The Construct environment name, such as \"PROD\" and \"TEST\". The [Get All Agency Environments](./api-agencies.html#operation/v4.get.agencies.name.environments) API returns a list of configured environments available for a specific agency. The [Get Environment Status](./api-agencies.html#operation/v4.get.agencies.name.environments.env.status) checks connectivity with the Agency/Environment.. \n\n**Note**: scope is required only when calling this API with grant_type=password for [Password Credential Login](../construct-passwordCredentialLogin.html). ",
+					"type": "string"
+				},
+				"refresh_token": {
+					"description": "The refresh token value obtained in the prior access token API request. \n\n**Note**: refresh_token is required only when calling this API to refresh the token for both [Authorization Code Flow](../construct-authCodeFlow.html) and [Password Credential Login](../construct-passwordCredentialLogin.html). ",
+					"type": "string"
+				},
+				"state": {
+					"description": "An opaque value that the client uses for maintaining the state between the request and callback. Enter a unique value. This can be used for [Cross-Site Request Forgery](http://en.wikipedia.org/wiki/Cross-site_request_forgery) (CSRF) protection.\n\nThis parameter is not used when refreshing a token. \n\n**Note**: state is used and optional only when calling this API with grant_type=authorization_code for [Authorization Code Flow](../construct-authCodeFlow.html). ",
+					"type": "string"
+				}
+			}
+		},
+		"response_token": {
+			"type": "object",
+			"properties": {
+				"access_token": {
+					"type": "string",
+					"description": "The issued user access token."
+				},
+				"token_type": {
+					"type": "string",
+					"description": "The type of the token issued. It contains the fixed value \"bearer\" for authorization_code grant type."
+				},
+				"expires_in": {
+					"type": "string",
+					"description": "The lifetime in seconds of the access token. For example, the value \"3600\" denotes that the access token will expire in one hour from the time the response was generated."
+				},
+				"refresh_token": {
+					"type": "string",
+					"description": "The refresh token that can be used to obtain a new access token."
+				},
+				"scope": {
+					"type": "string",
+					"description": "The scope of the resources authenticated by the authorization server."
+				},
+				"state": {
+					"type": "string",
+					"description": "The exact value received from the client. "
+				}
+			}
+		},
+		"response_tokeninfo": {
+			"type": "object",
+			"properties": {
+				"appId": {
+					"type": "string",
+					"description": "The app ID value from [Construct Developer Portal](https://developer.accela.com). This value is passed in your access token request."
+				},
+				"userId": {
+					"type": "string",
+					"description": "The logged in user's unique id."
+				},
+				"agencyName": {
+					"type": "string",
+					"description": "The agency name defined in the Accela Administrator Portal. The agency name is passed by client request or chosen by the end-user during access token request flow. "
+				},
+				"scopes": {
+				   "items": {
+						"description": "A scope the request has access to.",
+						"type": "string"
+				   },
+				   "type": "array"
+				},
+				"expiresIn": {
+					"type": "integer",
+					"description": "The lifetime in seconds of the access token."
+				},
+				"state": {
+					"type": "string",
+					"description": "The exact value received from the client. "
+				}
+			}
+		},
+		"response_status": {
+			"type": "object",
+			"properties": {
+				"status": {
+					"type": "string",
+					"description": "The HTTP error code."
+				},
+				"code": {
+					"type": "string",
+					"description": "The error code."
+				},
+				"message": {
+					"type": "string",
+					"description": "The error message."
+				},
+				"traceId": {
+					"type": "string",
+					"description": "The traceid for debugging purposes. "
+				}
+			}
+		},
+		"response_error": {
+			"type": "object",
+			"properties": {
+				"error": {
+					"type": "string",
+					"description": "The error code. Refer [here](https://tools.ietf.org/html/rfc6749#section-4.1.2) for details."
+				},
+				"error_description": {
+					"type": "string",
+					"description": "The error description text."
+				},
+				"error_uri": {
+					"type": "string",
+					"description": "The URI of web page with more information about the error."
+				},
+				"state": {
+					"type": "string",
+					"description": "The exact value received from the client. "
+				}
+			}
+		}
+		
+	}
+}
