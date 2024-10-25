@@ -1,9 +1,13 @@
 [tool.poetry]
 name = "accelapy"
-version = "0.1.0"
-description = ""
+version = "0.2.2"
+description = "Accela REST API"
 authors = ["MichaelAChrisco <michaelachrisco@gmail.com>"]
 readme = "README.md"
+license = "AGPL-3.0-or-later"
+homepage = "https://github.com/michaelachrisco/accelapy"
+repository = "https://github.com/michaelachrisco/accelapy"
+keywords = ["accela", "rest", "api"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
