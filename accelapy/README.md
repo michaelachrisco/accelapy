@@ -2,6 +2,7 @@
 An Accela specific API for https://developer.accela.com/docs/api_reference/api-index.html
 
 ## How to use:
+`pip install accelapy`
 
 You may need to get your payload from Accela for your environment.
 
