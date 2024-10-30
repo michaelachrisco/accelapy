@@ -22,3 +22,8 @@ json_load = json.loads(response.content)
 record_models : List[RecordModel] = [RecordModel.from_dict(x) for x in json_load['result']]
 print(record_models)
 ```
+
+## Documentation
+* Accela official docs: https://developer.accela.com/docs/api_reference/api-auth.html
+* Accela official docs: https://developer.accela.com/docs/api_reference/api-records.html
+* TODO: Many more from [this list](https://developer.accela.com/docs/api_reference/api-index.html)
