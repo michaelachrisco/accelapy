@@ -41,8 +41,8 @@ jobs:
       # Deploy the package (for example, to PyPI)
       - name: Deploy to PyPI
         env:
-          PYPI_USERNAME: ${{ secrets.PYPI_TOKEN }}  # Set your PyPI username as a secret
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}  # Set your PyPI username as a secret
         run: |
           cd accelapy/accelapy  # Navigate to the folder containing poetry.toml
           poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry publish
+          poetry publish 
