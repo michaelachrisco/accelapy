@@ -3,7 +3,7 @@ name: Deploy Package via Poetry
 on:
   push:
     branches:
-      - 1-gh-actions-build-deploy
+      - main
 
 jobs:
   deploy:
