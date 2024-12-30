@@ -13,7 +13,7 @@ def _get_kwargs(
     fields: Union[Unset, None, str] = UNSET,
     lang: Union[Unset, None, str] = UNSET,
     authorization: str,
-    record_data: {}
+    data: {}
 ) -> Dict[str, Any]:
     headers = {}
     headers["Authorization"] = authorization
@@ -30,7 +30,7 @@ def _get_kwargs(
         "url": "/v4/records",
         "params": params,
         "headers": headers,
-        "data": record_data
+        "data": data
     }
 
 
@@ -66,6 +66,7 @@ def sync_detailed(
     fields: Union[Unset, None, str] = UNSET,
     lang: Union[Unset, None, str] = UNSET,
     authorization: str,
+    data: {}
 ) -> Response[Any]:
     """Create Record
 
@@ -107,6 +108,7 @@ def sync_detailed(
         fields=fields,
         lang=lang,
         authorization=authorization,
+        data=data
     )
 
     response = client.get_httpx_client().request(
