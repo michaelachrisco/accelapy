@@ -38,6 +38,6 @@ print(custom_tables)
 ```
 
 ## Documentation
-* Accela official docs: https://developer.accela.com/docs/api_reference/api-auth.html
-* Accela official docs: https://developer.accela.com/docs/api_reference/api-records.html
+* Accela API Auth docs: https://developer.accela.com/docs/api_reference/api-auth.html
+* Accela API Records docs: https://developer.accela.com/docs/api_reference/api-records.html
 * TODO: Many more from [this list](https://developer.accela.com/docs/api_reference/api-index.html)
