@@ -19,6 +19,10 @@ from typing import List
 from accelapy.payload import Payload
 
 payload = Payload(payload_str='totally-real-payload')
+
+# OR optionally generate payload from arguments
+payload = Payload(payload = Payload(scope='records', grant_type='password', client_id='totallyrealclientid', client_secret='totallyrealsecret', username='USER', password='pass', agency_name='AGENCYNAME', environment='NONPROD1')
+
 api_client = AccelaClient(payload=payload)
 
 # Get an Accela record, then get its associated custom tables
