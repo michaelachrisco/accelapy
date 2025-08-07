@@ -8,7 +8,7 @@ An Accela specific API for https://developer.accela.com/docs/api_reference/api-i
 
 `pip install accelapy`
 
-You may need to get your payload from Accela for your environment.
+You may need to get your payload from Accela for your environment. See: [Password Credential Login](https://developer.accela.com/docs/construct-passwordCredentialLogin.html) for more information.
 
 ```python
 from accelapy.client import AccelaClient
