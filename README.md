@@ -4,12 +4,14 @@
 # accelapy
 An Accela specific API for https://developer.accela.com/docs/api_reference/api-index.html
 
-## How to use:
-
+# Install
 `pip install accelapy`
+
+## How to use:
 
 You may need to get your payload from Accela for your environment. See: [Password Credential Login](https://developer.accela.com/docs/construct-passwordCredentialLogin.html) for more information.
 
+### Authentication
 ```python
 from accelapy.client import AccelaClient
 from accelapy.records_client.types import Response
@@ -25,13 +27,21 @@ payload = Payload(payload = Payload(scope='records', grant_type='password', clie
 
 api_client = AccelaClient(payload=payload)
 
+```
+### Get a record:
+```python
+
 # Get an Accela record, then get its associated custom tables
-record_response: Response = api_client.v4_get_records.sync_detailed(client=api_client.authentication_client,
+record_response: Response[RecordModel] = api_client.v4_get_records.sync_detailed(client=api_client.authentication_client,
                                                                     custom_id='TM-6308')
+
 json_load = json.loads(record_response.content)
 record_models: List[RecordModel] = [RecordModel.from_dict(x) for x in json_load['result']]
 print(record_models)
+```
 
+### Get a records custom table:
+``` python
 real_record_id = record_models[0].id
 record_custom_tables_response: Response = api_client.v_4_get_records_record_id_custom_tables.sync_detailed(
     client=api_client.authentication_client, record_id=real_record_id)

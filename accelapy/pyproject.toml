@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "accelapy"
-version = "0.3.2"
+version = "0.3.3"
 description = "Accela REST API"
 authors = ["MichaelAChrisco <michaelachrisco@gmail.com>"]
 readme = "README.md"
