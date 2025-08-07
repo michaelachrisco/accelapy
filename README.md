@@ -25,13 +25,21 @@ payload = Payload(payload = Payload(scope='records', grant_type='password', clie
 
 api_client = AccelaClient(payload=payload)
 
+```
+## Get a record:
+```python
+
 # Get an Accela record, then get its associated custom tables
-record_response: Response = api_client.v4_get_records.sync_detailed(client=api_client.authentication_client,
+record_response: Response[RecordModel] = api_client.v4_get_records.sync_detailed(client=api_client.authentication_client,
                                                                     custom_id='TM-6308')
+
 json_load = json.loads(record_response.content)
 record_models: List[RecordModel] = [RecordModel.from_dict(x) for x in json_load['result']]
 print(record_models)
+```
 
+## Get a records custom table:
+``` python
 real_record_id = record_models[0].id
 record_custom_tables_response: Response = api_client.v_4_get_records_record_id_custom_tables.sync_detailed(
     client=api_client.authentication_client, record_id=real_record_id)
