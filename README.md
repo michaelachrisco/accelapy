@@ -1,6 +1,3 @@
-![PyPI - Downloads](https://img.shields.io/pypi/dm/accelapy)
-
-
 # accelapy
 An Accela specific API for https://developer.accela.com/docs/api_reference/api-index.html
 
