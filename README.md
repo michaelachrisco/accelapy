@@ -1,5 +1,5 @@
 # accelapy
-An Accela specific API for https://developer.accela.com/docs/api_reference/api-index.html
+An Accela specific API client for https://developer.accela.com/docs/api_reference/api-index.html
 
 # Install
 `pip install accelapy`
@@ -7,6 +7,8 @@ An Accela specific API for https://developer.accela.com/docs/api_reference/api-i
 ## How to use:
 
 You may need to get your payload from Accela for your environment. See: [Password Credential Login](https://developer.accela.com/docs/construct-passwordCredentialLogin.html) for more information.
+This library is used for syncing to and from Accela. It contains validation, better error statements, and pythonic models for the API in Accela.
+
 
 ### Authentication
 ```python
