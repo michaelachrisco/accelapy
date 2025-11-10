@@ -1,5 +1,5 @@
 # accelapy
-An Accela specific API client for https://developer.accela.com/docs/api_reference/api-index.html
+An Accela specific API client for Accela V4 API https://developer.accela.com/docs/api_reference/api-index.html
 
 # Install
 `pip install accelapy`
