@@ -14,6 +14,7 @@ def _get_kwargs(
     fields: Union[Unset, None, str] = UNSET,
     lang: Union[Unset, None, str] = UNSET,
     authorization: str,
+    data = {},
 ) -> Dict[str, Any]:
     headers = {}
     headers["Authorization"] = authorization
@@ -32,6 +33,7 @@ def _get_kwargs(
         ),
         "params": params,
         "headers": headers,
+        data=data,
     }
 
 
@@ -68,6 +70,7 @@ def sync_detailed(
     fields: Union[Unset, None, str] = UNSET,
     lang: Union[Unset, None, str] = UNSET,
     authorization: str,
+    data={},
 ) -> Response[Any]:
     """Estimate Record Fees
 
@@ -121,6 +124,7 @@ async def asyncio_detailed(
     fields: Union[Unset, None, str] = UNSET,
     lang: Union[Unset, None, str] = UNSET,
     authorization: str,
+    data={},
 ) -> Response[Any]:
     """Estimate Record Fees
 
@@ -144,6 +148,7 @@ async def asyncio_detailed(
         fields (Union[Unset, None, str]):
         lang (Union[Unset, None, str]):
         authorization (str):
+        data (dict):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -158,6 +163,7 @@ async def asyncio_detailed(
         fields=fields,
         lang=lang,
         authorization=authorization,
+        data=data,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
