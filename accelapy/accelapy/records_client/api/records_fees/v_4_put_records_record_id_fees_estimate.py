@@ -33,7 +33,7 @@ def _get_kwargs(
         ),
         "params": params,
         "headers": headers,
-        data=data,
+        "data": data,
     }
 
 
