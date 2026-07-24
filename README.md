@@ -1,7 +1,7 @@
 # accelapy
 An Accela specific API client for Accela V4 API https://developer.accela.com/docs/api_reference/api-index.html
 
-Used for custom API scripting, integration with third parties (Salesforce, Bluebeam, etc) and interacting with the Accela REST API. 
+Used for custom API scripting, integration with third parties (Salesforce, Bluebeam, other Permit providers, etc) and interacting with the Accela REST API. 
 
 # Install
 `pip install accelapy`
