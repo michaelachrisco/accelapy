@@ -8,7 +8,7 @@ Used for custom API scripting, integration with third parties (Salesforce, Blueb
 
 ## How to use:
 
-You may need to get your payload from Accela for your environment. See: [Password Credential Login](https://developer.accela.com/docs/construct-passwordCredentialLogin.html) for more information.
+You may need to get your payload from Accela for your environment. See: [Password Credential Login](https://developer.accela.com/docs/construct-passwordCredentialLogin.html) for more information. Please see issue for [potential solution](https://github.com/michaelachrisco/accelapy/issues/14#issuecomment-5357839258). 
 This library is used for syncing to and from Accela. It contains validation, better error statements, and pythonic models for the API in Accela.
 
 
